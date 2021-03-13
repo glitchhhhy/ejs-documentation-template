@@ -1,0 +1,13 @@
+<div class="container">
+    <h2>
+        <%= name %>
+        <small class="font-weight-light font-size-15 text-muted">
+            <%= section.description %>
+        </small>
+    </h2>
+    <% for (const [j, [url, endpoint]] of Object.entries(section).entries()) { %>
+        <% if (url !== 'description') { %>
+            <%- include('api.ejs', { url, j, ...endpoint }) %>
+        <% } %>
+    <% } %>
+</div>

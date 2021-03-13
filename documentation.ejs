@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="assets/halfmoon.min.css" />
+        <link rel="stylesheet" href="assets/styles.css" />
+        <script src="assets/halfmoon.min.js"></script>
+        <title><%= applicationName %></title>
+    </head>
+    <body class="dark-mode">
+        <div class="page-wrapper with-navbar with-sidebar">
+            <%- include('components/navbar.ejs', { applicationName }) %>
+            <div class="sidebar-overlay"></div>
+            <%- include('components/sidebar.ejs') %>
+            <div class="content-wrapper">
+                <div class="content">
+                    <% for (const [i, [name, section]] of Object.entries(api).entries()) { %>
+                        <%- include('components/api_section.ejs', { i, name, section }) %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,97 @@
+<div
+    class="card"
+    id="endpoint<%= i %>-<%= j %>"
+>
+    <h3 class="m-0">
+        <%= name %>
+        <small class="text-muted"><%= url %></small>
+        <% if (private) { %>
+            <span class="badge align-middle badge-danger">Private</span>
+        <% } %>
+        <span class="badge align-middle badge-primary"><%= method %></span>
+    </h3>
+    <hr />
+    <% if (private) { %>
+        <div class="alert alert-danger">
+            <strong>Private:</strong> This endpoint is private. You must be authenticated to use it.
+        </div>
+    <% } %>
+    <% if (notes.length === 1) { %>
+        <div class="alert alert-primary">
+            <strong>Note:</strong> <%= notes[0] %>
+        </div>
+    <% } else if (notes.length > 1) { %>
+        <div class="alert alert-primary">
+            <strong>Notes:</strong>
+            <ul class="m-5">
+                <% for (const note of notes) { %>
+                    <li class="m-0 ml-20"><%= note %></li>
+                <% } %>
+            </ul>
+        </div>
+    <% } %>
+    <br />
+    <h4 class="font-weight-bolder m-0">Description</h4>
+    <p class="m-0"><%= description %></p>
+    <br />
+    <% if (parameters.length > 0) { %>
+        <h4 class="font-weight-bolder m-0">Parameters</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 15%;">Name</th>
+                    <th style="width: 20%;">Type</th>
+                    <th style="width: 65%;">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (const parameter of parameters) { %>
+                    <tr>
+                        <td><%= parameter.name %></td>
+                        <td><%= parameter.type %></td>
+                        <td><%= parameter.description %></td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    <% } %>
+    <br />
+    <% if (responses.length > 0) { %>
+        <h4 class="font-weight-bolder m-0">Responses</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 12%;">Code</th>
+                    <th style="width: 28%;">Type</th>
+                    <th style="width: 70%;">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (const response of responses) { %>
+                    <tr>
+                        <td><%= response.code %></td>
+                        <td>
+                            <% if (response.code.charAt(0) === '1') { %>
+                                1xx Informational
+                            <% } else if (response.code.charAt(0) === '2') { %>
+                                2xx Success
+                            <% } else if (response.code.charAt(0) === '3') { %>
+                                3xx Redirect
+                            <% } else if (response.code.charAt(0) === '4') { %>
+                                4xx Client Error
+                            <% } else if (response.code.charAt(0) === '5') { %>
+                                5xx Server Error
+                            <% } else { %>
+                                ?xx Unknown
+                            <% } %>
+                        </td>
+                        <td><%= response.description %></td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    <% } %>
+    <br />
+    <h4 class="font-weight-bolder m-0">Example</h4>
+    <pre class="m-0"><code><%= example %></code></pre>  
+</div>

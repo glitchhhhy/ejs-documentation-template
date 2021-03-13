@@ -1,0 +1,184 @@
+{
+    "applicationName": "Example Application",
+    "api": {
+        "Authentication": {
+            "description": "Authenticate a user",
+            "/admin/api/register": {
+                "name": "Register User",
+                "private": true,
+                "method": "POST",
+                "notes": [],
+                "description": "Register a user.",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "type": "string",
+                        "description": "The username of the user to register."
+                    },
+                    {
+                        "name": "password",
+                        "type": "string",
+                        "description": "The password of the user to register."
+                    }
+                ],
+                "example": "<form action=\"/admin/api/register\" method=\"POST\">\n    <input type=\"text\" name=\"username\" />\n    <input type=\"password\" name=\"password\" />\n</form>",
+                "responses": [
+                    {
+                        "code": "401",
+                        "description": "Only authenticated users can use this endpoint."
+                    }
+                ]
+            },
+            "/admin/api/login": {
+                "name": "Login User",
+                "private": false,
+                "method": "POST",
+                "notes": [
+                    "This endpoint always redirects the user, regardless of input."
+                ],
+                "description": "Log in a user.",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "type": "string",
+                        "description": "The username of the user to log in."
+                    },
+                    {
+                        "name": "password",
+                        "type": "string",
+                        "description": "The password of the user to log in."
+                    }
+                ],
+                "example": "<form action=\"/admin/api/login\" method=\"POST\">\n    <input type=\"text\" name=\"username\" />\n    <input type=\"password\" name=\"password\" />\n</form>",
+                "responses": [
+                    {
+                        "code": "302",
+                        "description": "Redirect to /admin/login?error=invalid_username_password. Invalid credentials."
+                    },
+                    {
+                        "code": "302",
+                        "description": "Redirect to /admin/login?error=auth_err. Authorization failed for an unknown reason."
+                    },
+                    {
+                        "code": "302",
+                        "description": "Redirect to /admin/portal. User logged in successfully."
+                    }
+                ]
+            },
+            "/admin/api/logout": {
+                "name": "Logout User",
+                "private": true,
+                "method": "DELETE",
+                "notes": [],
+                "description": "Log a user out.",
+                "parameters": [],
+                "example": "fetch('/admin/api/logout', {\n    method: 'DELETE'\n})",
+                "responses": [
+                    {
+                        "code": "302",
+                        "description": "Redirect to /admin/login. User logged out successfully."
+                    }
+                ]
+            }
+        },
+        "Article Retrieval": {
+            "description": "Retrieve one or multiple articles.",
+            "/posts": {
+                "name": "Retrieve Posts",
+                "private": false,
+                "method": "GET",
+                "notes": [
+                    "Will move to /api/articles soon!",
+                    "Articles returned from this API may be cached..."
+                ],
+                "description": "Get all articles by page & type.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "type": "number",
+                        "description": "The page to retrieve. Each page has a max of 12 articles."
+                    },
+                    {
+                        "name": "type",
+                        "type": "string",
+                        "description": "The type of articles to retrieve."
+                    }
+                ],
+                "example": "fetch('/posts?page=0&type=Home')",
+                "responses": [
+                    {
+                        "code": "400",
+                        "description": "Invalid page or type."
+                    },
+                    {
+                        "code": "404",
+                        "description": "No articles found with the specified query."
+                    },
+                    {
+                        "code": "200",
+                        "description": "Successfully retrieved the articles."
+                    }
+                ]
+            },
+            "/admin/api/get_article": {
+                "name": "Retrieve Article",
+                "private": true,
+                "method": "GET",
+                "notes": [],
+                "description": "This endpoint retrieves a single article by ID and type.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "type": "number",
+                        "description": "The ID of the article to retrieve."
+                    },
+                    {
+                        "name": "type",
+                        "type": "string",
+                        "description": "The type of articles to retrieve."
+                    }
+                ],
+                "example": "fetch('/admin/api/get_article?id=0&type=Home')",
+                "responses": [
+                    {
+                        "code": "401",
+                        "description": "Only authenticated users can use this endpoint."
+                    },
+                    {
+                        "code": "404",
+                        "description": "No articles found with the specified query."
+                    },
+                    {
+                        "code": "200",
+                        "description": "Successfully retrieved the article."
+                    }
+                ]
+            },
+            "/admin/api/articles_without_content": {
+                "name": "Retrieve Article Data",
+                "private": true,
+                "method": "GET",
+                "notes": [],
+                "description": "This endpoint returns all articles by type with only the title and ID.",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "type": "string",
+                        "description": "The type of articles to retrieve."
+                    }
+                ],
+                "example": "fetch('/admin/api/articles_without_content?type=Home')",
+                "responses": [
+                    {
+                        "code": "401",
+                        "description": "Only authenticated users can use this endpoint."
+                    },
+                    {
+                        "code": "200",
+                        "description": "Successfully retrieved the article."
+                    }
+                ]
+            }
+        }
+    }
+}

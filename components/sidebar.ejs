@@ -1,0 +1,19 @@
+<div class="sidebar">
+    <div class="sidebar-menu">
+        <% for (const [i, [name, section]] of Object.entries(api).entries()) { %>
+            <h5 class="sidebar-title"><%- name %></h5>
+            <div class="sidebar-divider"></div>
+            <% for (const [j, [endpointName, endpoint]] of Object.entries(section).entries()) { %>
+                <% if (endpointName !== 'description') { %>
+                    <a
+                        href="#endpoint<%= i %>-<%= j %>"
+                        class="sidebar-link"
+                    >
+                        <%- endpoint.name ?? endpointName %>
+                    </a>
+                <% } %>
+            <% } %>
+            <br />
+        <% } %>
+    </div>
+</div>

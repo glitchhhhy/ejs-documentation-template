@@ -1,0 +1,6 @@
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Generation tools not included.
+generate/
